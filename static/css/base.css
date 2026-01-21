@@ -43,6 +43,15 @@ main {
     box-shadow: var(--smal-box-shadow);
 }
 
+img.logo {
+    width: 18.75rem;
+}
+
+.active {
+    border-bottom: 2px solid var(--blue);
+    font-weight: 500;
+}
+
 /* Footer */
 footer {
     flex-shrink: 0;
