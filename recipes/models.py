@@ -4,6 +4,23 @@ from django.contrib.auth.models import User
 from djrichtextfield.models import RichTextField
 from django_resized import ResizedImageField
 
+# Choice Fields
+MEAL_TYPES = (("breakfast", "Breakfast"), ("lunch", "Lunch"), ("dinner", "Dinner"))
+
+CUISINE_TYPES = (
+    ("african", "African"),
+    ("american", "American"),
+    ("caribbean", "Caribbean"),
+    ("asian", "Asian"),
+    ("middle_eastern", "Middle Eastern"),
+    ("chinese", "Chinese"),
+    ("indian", "Indian"),
+    ("pakistani", "Pakistani"),
+    ("indonesian", "Indonesian"),
+    ("european", "European"),
+    ("oceanic", "Oceanic"),
+)
+
 class Recipe(models.Model):
     """
     A model to create and manage recipes
@@ -24,3 +41,10 @@ class Recipe(models.Model):
         blank=False,
         null=False,
     )
+    image_alt = models.CharField(max_length=100, null=False, blank=False)
+    meal_type = models.CharField(max_length=50, choices=MEAL_TYPES, default="breakfast")
+    cuisine_types = models.CharField(
+        max_length=50, choices=CUISINE_TYPES, default="african"
+    )
+    calories = models.IntegerField()
+    posted_date = models.DateTimeField(auto_now=True)
