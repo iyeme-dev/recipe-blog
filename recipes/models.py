@@ -48,3 +48,9 @@ class Recipe(models.Model):
     )
     calories = models.IntegerField()
     posted_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-posted_date"]
+
+    def __str__(self):
+        return str(self.title)
