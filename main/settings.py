@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     # Apps
-    'home'
+    'home',
 
      # Other
     'crispy_forms',
@@ -150,7 +150,7 @@ USE_TZ = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_VERIFCATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
