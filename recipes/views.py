@@ -1,9 +1,13 @@
 from django.views.generic import CreateView
 
+from django.contrib.auth.mixins import (
+    UserPassesTestMixin, LoginRequiredMixin
+)
+
 from .models import Recipe
 from .forms import RecipeForm
 
-class AddRecipe(CreateView):
+class AddRecipe(LoginRequiredMixin, CreateView):
     """Add recipe view"""
 
     template_name = "recipes/add_recipe.html"
