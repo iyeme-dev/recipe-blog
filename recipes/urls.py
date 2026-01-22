@@ -6,6 +6,8 @@ from .views import (
     EditRecipe
 )
 
+app_name = "recipes"
+
 urlpatterns = [
     path("add/", AddRecipe.as_view(), name="add_recipe"),
     path("", Recipes.as_view(), name="recipes"),
