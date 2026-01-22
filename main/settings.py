@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 DJRICHTEXTFIELD_CONFIG = {
-    'js': ['//cdn.ckeditor.com/4.14.0/standard/ckeditor.js'],
+    'js': ['//cdn.ckeditor.com/4.25.1/standard/ckeditor.js'],
     'init_template': 'djrichtextfield/init/ckeditor.js',
     'settings': {
         'toolbar': [
