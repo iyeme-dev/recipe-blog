@@ -77,6 +77,32 @@ img.logo {
     cursor: pointer;
 }
 
+.recipe-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.recipe-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ingredients, .instructions, .recipe-detail {
+    width: 100%;
+}
+
+.recipe-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe-pic {
+    width: 100%;
+    height: auto;
+}
+
 /* Footer */
 footer {
     flex-shrink: 0;
