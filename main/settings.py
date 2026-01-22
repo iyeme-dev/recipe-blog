@@ -198,6 +198,8 @@ LOGOUT_REDIRECT_URL = "/"
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+# required for collectstatic on Heroku
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 if 'USE_AWS' in os.environ:
     # Bucket Config
