@@ -13,6 +13,13 @@ class Recipes(ListView):
     model = Recipe
     context_object_name = "recipes"
 
+class RecipeDetail(DetailView):
+    """View a single recipe"""
+
+    template_name = "recipes/recipe_detail.html"
+    model = Recipe
+    context_object_name = "recipe"
+
 
 class AddRecipe(LoginRequiredMixin, CreateView):
     """Add recipe view"""
