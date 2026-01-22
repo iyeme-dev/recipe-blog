@@ -1,13 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic import CreateView
 
+from .models import Recipe
+from .forms import RecipeForm
 
-def recipe_list(request):
-    return HttpResponse("Recipes page")
+class AddRecipe(CreateView):
+    """Add recipe view"""
 
-from django.shortcuts import render
+    template_name = "recipes/add_recipe.html"
+    model = Recipe
+    success_url = "/recipes/"
 
-def add_recipe(request):
-    return render(request, "recipes/add_recipe.html")
-
-
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(AddRecipe, self).form_valid(form)
