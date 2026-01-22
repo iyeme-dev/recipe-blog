@@ -118,3 +118,35 @@ footer {
     height: 2rem;
     margin: 1rem;
 }
+
+@media screen and (min-width: 62.5em) {
+    .main-title {
+        width: 50%;
+    }
+    
+    .recipe-info {
+        flex-direction: row;
+        border: 1px solid var(--black);
+    }
+
+    .recipe-img {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+    .recipe-detail {
+        width: 60%;
+        padding: 2rem;
+    }
+
+    .recipe-container {
+        flex-direction: row;
+    }
+
+    .ingredients {
+        width: 33.33%;
+    }}
+
+    .instructions {
+        width: 66.66%;
+    }
