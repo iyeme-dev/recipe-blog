@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 import dj_database_url
+if os.path.isfile('env.py'):
+    import env
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +32,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    '.herokuapp.com', '127.0.0.1'
+    '.herokuapp.com', 
+    '127.0.0.1',
+    'our-recipe-app-368893a37080.herokuapp.com'
 ]
 
 
@@ -44,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django.contrib.sites",
-    
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -134,16 +138,17 @@ WSGI_APPLICATION = 'main.wsgi.application'
 #     }
 # }
 
- # DATABASES = {
- #     'default': {
- #         'ENGINE': 'django.db.backends.sqlite3',
- #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
- #     }
- # }
-     
-DATABASES = {
-     'default': dj_database_url.parse('postgresql://neondb_owner:npg_l7ncAFzHNjr9@ep-flat-scene-agrmwosh.c-2.eu-central-1.aws.neon.tech/cost_satin_sway_103764')
- }
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
+else: 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -192,3 +197,20 @@ LOGOUT_REDIRECT_URL = "/"
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "INFO", "propagate": True},
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": True},
+    },
+}
