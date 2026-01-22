@@ -6,10 +6,13 @@ from .views import (
     EditRecipe
 )
 
+app_name = "recipes"
+
 urlpatterns = [
     path("add/", AddRecipe.as_view(), name="add_recipe"),
     path("", Recipes.as_view(), name="recipes"),
-    path("<slug:pk>/", RecipeDetail.as_view(), name="recipe_detail"),
-    path("delete/<slug:pk>/", DeleteRecipe.as_view(), name="delete_recipe"),
-    path("edit/<slug:pk>/", EditRecipe.as_view(), name="edit_recipe",)
+    path("<int:pk>/", RecipeDetail.as_view(), name="recipe_detail"),
+    path("delete/<int:pk>/", DeleteRecipe.as_view(), name="delete_recipe"),
+    path("edit/<int:pk>/", EditRecipe.as_view(), name="edit_recipe"),
 ]
+
