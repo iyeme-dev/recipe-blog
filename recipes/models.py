@@ -21,6 +21,7 @@ CUISINE_TYPES = (
     ("oceanic", "Oceanic"),
 )
 
+
 class Recipe(models.Model):
     """
     A model to create and manage recipes
