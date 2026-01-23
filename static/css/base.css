@@ -125,7 +125,7 @@ img.logo {
 
 /* Recipes */
 .card {
-    height: 90%;
+    height: 8rem;
     margin-top: 1rem;
 }
 
@@ -204,20 +204,8 @@ img.logo {
 }
 
 /* clamp text to a fixed number of lines */
-.card-title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;       /* title: 2 lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.card-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;      /* description: 3 lines */
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.card-title .card-text{
+  overflow-wrap: anywhere;
 }
 
 .richtext,
