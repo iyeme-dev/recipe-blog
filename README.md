@@ -227,7 +227,6 @@ The app uses a clean, food-friendly colour palette that keeps the interface simp
 The layout is designed for quick discovery and easy reading. Recipes are presented in a clear feed/card format for browsing, with dedicated pages for full recipe details. Navigation supports common user journeys (latest recipes, meal categories, search, authentication), and the structure prioritises scannability—especially for ingredients and step-by-step instructions.
 
 ### Overall Information Architecture
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 The site is organised around a small set of top-level pages that support the main user journeys. A persistent header navigation provides direct access to **Home**, **Recipes**, **New**, **Register**, and **Login**, with a **Search** control available across pages to encourage quick discovery. 
 
 In terms of hierarchy, the experience flows from **discovery** (Home/Recipes) → **selection** (Recipe list) → **execution** (Recipe detail) → **contribution** (Register/Login → New recipe).
@@ -235,22 +234,22 @@ In terms of hierarchy, the experience flows from **discovery** (Home/Recipes) �
 ---
 
 ### Key Pages and Their Structure
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 
 #### Home (Discovery + Direction)
+![home page](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/home.rb.jpg)
 The Home page acts as a “starting hub” with a clear headline and a primary call-to-action (“Browse recipes”), immediately steering users into discovery. It also includes a **Browse By Meal Type** section with three prominent options (Breakfast, Lunch, Dinner) to help users jump straight to context-based browsing without extra clicks.
 
 #### Recipes (Latest Feed)
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+![Recipe page](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/recipe-page.jpg)
 The Recipes page is structured as a **latest-recipes feed**, presenting multiple recipe entries together so visitors can scan quickly and choose what interests them. Beneath the feed, there’s a clear prompt encouraging visitors to register (“Register to Share Yours”), which supports the transition from browsing to contributing.
 
 #### Meal Type Views (Breakfast/Lunch/Dinner)
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+![Meal type](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/meal_type.jpg)
 
 Meal-type navigation routes users to filtered recipe views using a query parameter (e.g., `?meal_type=breakfast`). This keeps the browsing model consistent—users still view recipes in the same list structure—but with the intent narrowed to the meal category they selected. 
 
 ##### Recipe Detail (Cooking Mode)
-<img width="1917" height="813" alt="image" src="https://github.com/user-attachments/assets/005b1a08-27cc-4afd-80e2-c7283226a1f0" />
+![Meal type](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/meal_type.jpg)
 
 Each recipe has a dedicated detail page that prioritises cooking clarity. The content is presented with a clear hierarchy:
 - Title + author/date metadata
@@ -821,6 +820,7 @@ GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io
 
 # Author
 Iyeme Salubi
+
 
 
 
