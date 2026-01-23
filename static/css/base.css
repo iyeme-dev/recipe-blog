@@ -164,6 +164,57 @@ img.logo {
     height: auto;
 }
 
+/* Card link */
+.recipe-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Uniform card */
+.recipe-card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Uniform image area (responsive) */
+.recipe-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Fixed text areas */
+.recipe-card-title,
+.recipe-card-text {
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* ~2 lines for title */
+.recipe-card-title {
+  line-height: 1.2;
+  max-height: calc(1.2em * 2);
+}
+
+/* ~3 lines for description */
+.recipe-card-text {
+  line-height: 1.4;
+  max-height: calc(1.4em * 3);
+  color: rgba(0,0,0,0.75);
+}
+
+/* Optional: keeps body height consistent */
+.recipe-card-body {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* Recipes CTA */
 .cta-share {
   background: linear-gradient(135deg, rgba(13,110,253,0.10), rgba(255,191,80,0.12));
