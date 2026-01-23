@@ -28,8 +28,8 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
 6. [Deployment](#deployment)
 7. [Security Features](#security-features)
 8. [Database](#database)
-   - [Database Schema](#database schema)
-   - [CRUD Operations](#crud operations)
+   - [Database Schema](#database-schema)
+   - [CRUD Operations](#crud-operations)
    - [Relationships](#relationships)
    - [ER Diagram](#er diagram)
 10. [Testing](#testing)
@@ -540,7 +540,8 @@ heroku open -recipe-blog
 # Database
 
 ## Database technology
-The deployed application uses PostgreSQL as its production database. Django connects through the DATABASE_URL environment variable (parsed by dj-database-url). The schema is created and maintained using Django migrations, which makes the database structure reproducible and version-controlled.
+The deployed application uses PostgreSQL as its production database. Django connects through the DATABASE_URL environment variable (parsed by dj-database-url). 
+The schema is created and maintained using Django migrations, which makes the database structure reproducible and version-controlled.
 
 The database stores structured data (users, recipes, etc.). Uploaded images are stored externally (S3); PostgreSQL stores the file path/reference to each image.
 
@@ -677,8 +678,8 @@ Database effect:
 ## Relationships
 
 Core app relationship
-	•	auth_user (1) → recipes_recipe (many)
-	•	recipes_recipe.user_id → auth_user.id (FK)
+- auth_user (1) → recipes_recipe (many)
+- recipes_recipe.user_id → auth_user.id (FK)
 	•	Meaning: one user can create many recipes; each recipe belongs to one user.
 	•	Delete rule: on_delete=CASCADE (deleting a user deletes their recipes)
 
@@ -711,3 +712,4 @@ Django auth/permissions (built-in)
 	•	admin actions performed by a user
 	•	django_content_type (1) → django_admin_log (many)
 	•	admin logs are tied to model types
+
