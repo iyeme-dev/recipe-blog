@@ -87,7 +87,7 @@ img.logo {
 }
 
 .home-banner .banner-btn {
-  width: 200px;             
+  width: fit-content;             
 }
 
 /* Meal type cards */
@@ -116,7 +116,6 @@ img.logo {
 }
 
 /* Form */
-
 .form {
     width: 100%;
     margin: 3% auto;
@@ -125,7 +124,6 @@ img.logo {
 }
 
 /* Recipes */
-
 .card {
     height: 90%;
     margin-top: 1rem;
