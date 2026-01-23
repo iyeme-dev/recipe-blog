@@ -31,7 +31,7 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
    - [Database Schema](#database-schema)
    - [CRUD Operations](#crud-operations)
    - [Relationships](#relationships)
-   - [ER Diagram](#er diagram)
+   - [ER Diagram](#er-diagram)
 10. [Testing](#testing)
    - [Browser Testing](#browser-testing)  
    - [Code Validation](#code-validation)  
@@ -680,36 +680,37 @@ Database effect:
 Core app relationship
 - auth_user (1) → recipes_recipe (many)
 - recipes_recipe.user_id → auth_user.id (FK)
-	•	Meaning: one user can create many recipes; each recipe belongs to one user.
-	•	Delete rule: on_delete=CASCADE (deleting a user deletes their recipes)
+- Meaning: one user can create many recipes; each recipe belongs to one user.
+- Delete rule: on_delete=CASCADE (deleting a user deletes their recipes)
 
 Sites + allauth relationships
-	•	django_site (1) → socialaccount_socialapp_sites (many)
-	•	join table links social apps to allowed sites
-	•	socialaccount_socialapp (1) → socialaccount_socialapp_sites (many)
-	•	a social app can be enabled on multiple sites
-	•	auth_user (1) → socialaccount_socialaccount (many)
-	•	a user can have multiple social identities
-	•	socialaccount_socialaccount (1) → socialaccount_socialtoken (many/0..many)
-	•	tokens are linked to a specific social account
-	•	socialaccount_socialapp (1) → socialaccount_socialtoken (many/0..many)
-	•	tokens are also linked to the social app used
-	•	auth_user (1) → account_emailaddress (many)
-	•	a user can store multiple email addresses
-	•	account_emailaddress (1) → account_emailconfirmation (many/0..many)
-	•	confirmation records link to an email address
+- django_site (1) → socialaccount_socialapp_sites (many)
+- join table links social apps to allowed sites
+- socialaccount_socialapp (1) → socialaccount_socialapp_sites (many)
+- a social app can be enabled on multiple sites
+- auth_user (1) → socialaccount_socialaccount (many)
+- a user can have multiple social identities
+- socialaccount_socialaccount (1) → socialaccount_socialtoken (many/0..many)
+- tokens are linked to a specific social account
+- socialaccount_socialapp (1) → socialaccount_socialtoken (many/0..many)
+- tokens are also linked to the social app used
+- auth_user (1) → account_emailaddress (many)
+- a user can store multiple email addresses
+- account_emailaddress (1) → account_emailconfirmation (many/0..many)
+- confirmation records link to an email address
 
 Django auth/permissions (built-in)
-	•	auth_user (many) ↔ auth_group (many)
-	•	via join table auth_user_groups
-	•	auth_group (many) ↔ auth_permission (many)
-	•	via join table auth_group_permissions
-	•	auth_user (many) ↔ auth_permission (many)
-	•	via join table auth_user_user_permissions
-	•	django_content_type (1) → auth_permission (many)
-	•	permissions are tied to a model type
-	•	auth_user (1) → django_admin_log (many)
-	•	admin actions performed by a user
-	•	django_content_type (1) → django_admin_log (many)
-	•	admin logs are tied to model types
+- auth_user (many) ↔ auth_group (many)
+- via join table auth_user_groups
+- auth_group (many) ↔ auth_permission (many)
+- via join table auth_group_permissions
+- auth_user (many) ↔ auth_permission (many)
+- via join table auth_user_user_permissions
+- django_content_type (1) → auth_permission (many)
+- permissions are tied to a model type
+- auth_user (1) → django_admin_log (many)
+- admin actions performed by a user
+- django_content_type (1) → django_admin_log (many)
+- admin logs are tied to model types
+
 
