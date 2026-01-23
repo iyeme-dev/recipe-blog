@@ -9,29 +9,32 @@
     <div class="row g-3">
       {% for recipe in recipes %}
         <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-          <a href="{% url 'recipes:recipe_detail' recipe.pk %}"
-             class="recipe-link d-block h-100"
-             aria-label="Click to view {{ recipe.title }}">
 
-            <div class="card recipe-card h-100">
-              <img src="{{ recipe.image.url }}"
-                   class="card-img-top recipe-card-img"
-                   alt="{{ recipe.image_alt }}">
+          <div class="card recipe-card h-100 position-relative">
+            <img src="{{ recipe.image.url }}"
+                 class="card-img-top recipe-card-img"
+                 alt="{{ recipe.image_alt|default:recipe.title }}">
 
-              <div class="card-body recipe-card-body">
-                <h2 class="card-title recipe-card-title">{{ recipe.title }}</h2>
-                <p class="card-text recipe-card-text">{{ recipe.description }}</p>
+            <div class="card-body recipe-card-body d-flex flex-column">
+              <h2 class="card-title recipe-card-title h5 mb-2">{{ recipe.title }}</h2>
+              <p class="card-text recipe-card-text mb-3">
+                {{ recipe.description|truncatewords:18 }}
+              </p>
 
-                <div class="recipe-card-actions mt-auto pt-2">
-                  <a class="btn btn-sm btn-outline-primary"
-                     href="{% url 'recipes:edit_recipe' recipe.pk %}">Edit</a>
-                  <a class="btn btn-sm btn-outline-danger"
-                     href="{% url 'recipes:delete_recipe' recipe.pk %}">Delete</a>
-                </div>
+              <!-- makes the whole card clickable without nesting links -->
+              <a href="{% url 'recipes:recipe_detail' recipe.pk %}"
+                 class="stretched-link"
+                 aria-label="Click to view {{ recipe.title }}"></a>
+
+              <div class="recipe-card-actions mt-auto pt-2 d-flex gap-2 position-relative" style="z-index: 2;">
+                <a class="btn btn-sm btn-outline-primary"
+                   href="{% url 'recipes:edit_recipe' recipe.pk %}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger"
+                   href="{% url 'recipes:delete_recipe' recipe.pk %}">Delete</a>
               </div>
             </div>
+          </div>
 
-          </a>
         </div>
       {% endfor %}
     </div>
