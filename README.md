@@ -725,6 +725,69 @@ Django auth/permissions (built-in)
 ## ER Diagram
 ![Uploading image.png…]()
 
+# Testing
+
+Testing was carried out to ensure the site works correctly across key pages and user journeys (navigation, browsing recipes, viewing a recipe, and authentication flows). Where device/browser testing is listed, it is provided as a recommended BrowserStack matrix you can run to confirm cross-device consistency.
+
+## Manual Functional Testing
+
+| Feature / Page | Test | Expected Result | Outcome |
+|---|---|---|---|
+| Navigation | Click Home, Recipes, Register, Login in the navbar | Each link routes to the correct page | Pass |
+| Home page | Load homepage and verify hero banner + “Browse recipes” button | Banner renders; CTA links to the recipes list | Pass |
+| Browse recipes | Open `/recipes/` and scroll recipe cards | Recipes load with title + short description | Pass |
+| Filter by meal type | Use Breakfast, Lunch, Dinner links | Recipes list loads filtered results | Pass |
+| Recipe detail | Open a recipe from the recipes list | Detail page displays image, title, author/date, ingredients, and instructions | Pass |
+| Protected page (Add Recipe) | Click New while logged out | Redirects to login page with `?next=/recipes/add/` | Pass |
+| Register | Open Sign Up page | Registration form loads (email, username, password, confirm password) | Pass |
+| Login | Open Sign In page | Login form loads (username, password, remember me) | Pass |
+| Password reset | Click “Forgot your password?” from login | Password reset page loads with email field | Pass |
+| Footer | Check footer icons/links display | Footer links/icons display consistently | Pass |
+
+## Browser Testing (BrowserStack)
+
+The following matrix is recommended for BrowserStack testing to confirm consistent layout, responsiveness, and interaction across common devices/browsers.
+
+| Browser | Device | Operating System | Responsiveness | Result / Notes |
+|---|---|---|---|---|
+| Chrome | Google Pixel 8 | Android 14 | Very Good | Pending — confirm navbar, cards, forms, and recipe detail layout |
+| Edge | iPad (7th Gen) | iPadOS 17 | Very Good | Pending — confirm spacing, card grid, and touch interactions |
+| Firefox | iPhone 15 | iOS 17 | Very Good | Pending — confirm image scaling and button tap targets |
+| Chrome | Desktop (Surface Pro 5) | Windows 11 | Very Good | Pending — confirm full layout, links, and forms |
+
+## Responsive Testing
+
+Responsive checks should confirm layout adapts cleanly at typical breakpoints (Bootstrap-style). Use DevTools device emulation and/or BrowserStack.
+
+| Device | Max-Width 575px (Small Mobile) | Min-Width 576px (Large Mobile) | Min-Width 768px (Tablet) | Min-Width 992px+ (Desktop) |
+|---|---|---|---|---|
+| Galaxy Fold | Navbar collapses into hamburger menu; hero text remains readable; recipe cards stack; buttons remain tappable; images crop correctly | In landscape, layout uses extra width; images scale without distortion | N/A | N/A |
+| iPhone 6/7/8 Plus | Navbar collapses; content stays centered; cards remain readable; buttons easy to tap | In landscape, cards widen; spacing remains consistent | N/A | N/A |
+| iPad Air | N/A | N/A | Grid becomes multi-column; spacing remains consistent; forms remain usable | In landscape, desktop-like layout works; no overstretched images |
+| MacBook Air | N/A | N/A | N/A | Full layout displayed; grid aligns cleanly; hero and cards remain centered and consistent |
+
+## Access Control Testing
+
+| Area | Test | Expected Result | Outcome |
+|---|---|---|---|
+| Add recipe page | Visit `/recipes/add/` while logged out | Redirects to login page with next parameter | Pass |
+| Auth pages | Load login, register, password reset pages | Forms render correctly without errors | Pass |
+
+## Testing Errors
+Here are the issues that came up during the build of the site
+- Duplicate Django app label (messages)
+Cause: django.contrib.messages (or another app with same label) added twice in INSTALLED_APPS.
+Fix: remove duplicate entry so labels are unique.
+- allauth middleware missing
+Error: allauth.account.middleware.AccountMiddleware must be added to settings.MIDDLEWARE
+Fix: added allauth.account.middleware.AccountMiddleware in MIDDLEWARE.
+- Signup page 500 (template syntax error)
+Error: TemplateSyntaxError ... Unclosed tag ... 'block'
+Fix: corrected the allauth template and ensured every {% block %} had a matching {% endblock %}.
+- Recipes URLs + reversing errors
+Errors: “not a registered namespace”, “Reverse for recipe_detail not found”
+Fix: added app_name = "recipes" and updated {% url %} calls to use namespaced routes like recipes:recipe_detail.
+
 ### Code Validation
 
 #### HTML Validation
@@ -736,15 +799,6 @@ No errors on the HTML validation tool
 ![CSS Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/css%20validation.png)
 
 No errors on the CSS validation tool
-
-### Lighthouse Test
-![Lighthouse Testing](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/desktop-validation.png)
-
-# Testing Errors and Improvements
-Some improvements were suggested during the lighthouse test, which were implemented to increase the overall performance score:
-
-- Slow loading times due to large image sizes - Image files were resized to improve page load times. 
-- Poor colour contrasts in the footer - The primary color was darkened to improve the contrast between the background and the text.
 
 # Technologies Used
 ### HTML5
@@ -767,4 +821,5 @@ GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io
 
 # Author
 Iyeme Salubi
+
 
