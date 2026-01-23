@@ -26,14 +26,15 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
    - [Layout & Structure](#layout-and-structure)  
    - [Wireframes](#wireframes)  
 6. [Deployment](#deployment)
-7. [Testing](#testing)
+7. [Security Features](#security-features)
+8. [Testing](#testing)
    - [Browser Testing](#browser-testing)  
    - [Code Validation](#code-validation)  
    - [Lighthouse Test](#lighthouse-test)
-8. [Testing Errors and Improvements](#testing-errors-and-improvements)
-9. [Technologies Used](#technologies-used)
-10. [Credit and Reference](#credit-and-reference)
-11. [Author](#author)
+9. [Testing Errors and Improvements](#testing-errors-and-improvements)
+10. [Technologies Used](#technologies-used)
+11. [Credit and Reference](#credit-and-reference)
+12. [Author](#author)
 
 
 # Project Overview
@@ -385,6 +386,151 @@ Console logging to Heroku logs
 Logging config routes errors to console (Heroku logs).
 
 Why it matters: Helps detect issues quickly without exposing stack traces to users (as long as DEBUG=False in production).
+
+# Deployment to Heroku (Django + Postgres + S3)
+
+## Pre-deployment checks (local)
+
+Activate venv and confirm the project runs locally:
+
+python manage.py check
+python manage.py makemigrations --check
+python manage.py migrate
+python manage.py runserver
+
+Check to ensure a single requirements.txt at the project root is present.
+
+## Install production dependencies
+
+### Install Gunicorn (Heroku web server):
+pip install gunicorn~=20.1
+
+### Freeze requirements:
+pip freeze > requirements.txt
+
+### Commit the changes:
+git add requirements.txt
+git commit -m "chore(deploy): add production dependencies"
+
+## Create the Procfile
+
+At the project root (no extension), create Procfile containing:
+web: gunicorn main.wsgi:application
+
+
+Commit:
+git add Procfile
+git commit -m "chore(deploy): add Procfile for gunicorn"
+
+## Create the Heroku app and connect Git remote
+
+- Create the Heroku app from the dashboard.
+
+- Add the Heroku remote:
+heroku git:remote -a recipe-blog
+
+- Check remotes:
+git remote -v
+
+## Configure settings.py for production
+A) ALLOWED_HOSTS
+
+Add Heroku domain:
+
+ALLOWED_HOSTS = [
+  ".herokuapp.com",
+  "127.0.0.1",
+  "recipe-blog.herokuapp.com",
+]
+
+B) Proxy/HTTPS + CSRF config
+
+For Heroku HTTPS:
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+CSRF_TRUSTED_ORIGINS = [
+  "https://recipe-blog.herokuapp.com",
+  "https://*.herokuapp.com",
+]
+
+C) Database (Postgres)
+import dj_database_url
+
+if "DATABASE_URL" in os.environ:
+    DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+D) DEBUG controlled by env var
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+
+Commit:
+git add main/settings.py
+git commit -m "chore(deploy): configure settings for Heroku"
+
+## Add Heroku config vars (environment variables)
+
+In the Heroku dashboard → Settings → Config Vars add:
+
+SECRET_KEY = your Django secret key
+DEBUG = False (production)
+(Later) USE_AWS, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+
+## Add Postgres to Heroku
+
+Create a Postgres addon:
+heroku addons:create heroku-postgresql:essential-0 -a recipe-blog
+Verify:
+heroku config -a recipe-blog
+
+## Deploy to Heroku
+
+Push code:
+git push heroku main
+
+To update GitHub:
+git push origin main
+
+## Run migrations on Heroku
+heroku run -a recipe-app -- python manage.py migrate
+
+## Configure S3 for static + media (storages)
+### Install dependencies
+pip install django-storages boto3
+pip freeze > requirements.txt
+git add requirements.txt
+git commit 
+
+### Add storages to INSTALLED_APPS
+INSTALLED_APPS += ["storages"]
+
+### Add S3 storage settings
+AWS_STORAGE_BUCKET_NAME
+AWS_S3_REGION_NAME
+AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY from env vars
+STATICFILES_LOCATION = "static"
+MEDIAFILES_LOCATION = "media"
+STORAGES mapping for default and staticfiles
+
+### Add Heroku config vars for AWS
+heroku config:set USE_AWS=True -a recipe-blog
+heroku config:set AWS_ACCESS_KEY_ID="..." -a recipe-blog
+heroku config:set AWS_SECRET_ACCESS_KEY="..." -a recipe-blog
+
+## Collect static to S3
+
+After deployment:
+heroku run -a recipe-blog -- python manage.py collectstatic --noinput
+
+## Open the app + monitor logs
+Open:
+heroku open -recipe-blog
 
 
 
