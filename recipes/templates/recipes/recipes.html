@@ -19,4 +19,24 @@
     </a>
     {% endfor %}
 </div>
+<!-- Call to action -->
+{% if not request.user.is_authenticated %}
+<section class="cta-share py-5 mt-4">
+  <div class="container">
+    <div class="cta-card p-4 p-md-5 text-center">
+      <h2 class="cta-title mb-2">Register to Share Yours</h2>
+      <p class="cta-text mb-4">
+        Got a recipe everyone loves? Create an account and start sharing your best meals with the community.
+      </p>
+      <a href="/accounts/signup/" class="btn btn-primary cta-btn" aria-label="Sign up to share your recipe">
+        Sign up
+      </a>
+      <p class="cta-note mt-3 mb-0">
+        Already have an account? <a href="/accounts/login/">Log in</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 {% endblock %}

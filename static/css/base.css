@@ -164,6 +164,38 @@ img.logo {
     height: auto;
 }
 
+/* Recipes CTA */
+.cta-share {
+  background: linear-gradient(135deg, rgba(13,110,253,0.10), rgba(255,191,80,0.12));
+}
+
+.cta-card {
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 1.25rem;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.cta-title {
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+}
+
+.cta-text {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.cta-btn {
+  width: 220px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+}
+
+.cta-note a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
 /* Prevent long words/URLs from overflowing */
 .card-title,
 .card-text {
