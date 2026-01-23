@@ -8,23 +8,22 @@
   <div class="container py-4">
     <div class="banner-card">
       <img
-        src="{% static 'images/recipe_banner_image.jpg' %}"
+        src="{% static 'images/banner.webp' %}"
         alt="Fresh recipes banner"
-        class="banner-img"/>
-        
+        class="banner-img"
+      />
       <div class="banner-overlay">
-        <a href="{% url 'recipes:recipes' %}" class="btn btn-primary banner-btn">
-            Browse Recipes
-        </a>
+        <h1 class="banner-title">Find Your Next Favourite Recipe</h1>
+        <p class="banner-subtitle">Search breakfast, lunch, and dinner ideas made easy.</p>
+        <a href="{% url 'recipes:recipes' %}" class="btn btn-primary">Browse recipes</a>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- Meal types -->
 <section class="container py-4">
-  <h2 class="text-center mb-4">Browse by meal type</h2>
+  <h2 class="text-center mb-4">Browse By Meal Type</h2>
 
   <div class="row g-3">
     <div class="col-md-4">

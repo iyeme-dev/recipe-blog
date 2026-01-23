@@ -70,15 +70,26 @@ img.logo {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  transform: translateY(40px); 
-  background: transparent;
+  padding: 2rem;
+  background: linear-gradient(90deg, rgba(0,0,0,0.65), rgba(0,0,0,0.10));
+  color: #fff;
+}
+
+.home-banner .banner-title {
+  margin: 0 0 0.5rem 0;
+}
+
+.home-banner .banner-subtitle {
+  max-width: 40rem;
+  margin-bottom: 1rem;
 }
 
 .home-banner .banner-btn {
   width: 200px;             
 }
+
 /* Meal type cards */
 .meal-card {
   text-decoration: none;
