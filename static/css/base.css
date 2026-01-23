@@ -266,6 +266,11 @@ img.logo {
   word-break: break-word;
 }
 
+.recipe-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 /* Footer */
 footer {
     flex-shrink: 0;
