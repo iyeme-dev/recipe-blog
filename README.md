@@ -40,7 +40,7 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
 13. [Credit and Reference](#credit-and-reference)
 14. [Author](#author)
 
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+![mock up](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/mock_up.jpg)
 # Project Overview
 This project is based on developing a community-driven web app for discovering and sharing recipes: visitors can browse the latest recipe feed, search for dishes, and explore recipes by meal type (breakfast, lunch, dinner), then open a detailed recipe page to view information like description, calories, cuisine, ingredients, and step-by-step instructions. Users can also create an account and log in to contribute their own recipes through an authenticated “New recipe” flow, helping build a shared collection of everyday cooking ideas.
 
@@ -821,5 +821,6 @@ GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io
 
 # Author
 Iyeme Salubi
+
 
 
