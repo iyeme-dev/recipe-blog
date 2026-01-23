@@ -103,6 +103,37 @@ img.logo {
     height: auto;
 }
 
+/* Prevent long words/URLs from overflowing */
+.card-title,
+.card-text {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* clamp text to a fixed number of lines */
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;       /* title: 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      /* description: 3 lines */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.richtext,
+.ingredients,
+.instructions {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* Footer */
 footer {
     flex-shrink: 0;
