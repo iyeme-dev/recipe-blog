@@ -21,4 +21,38 @@
   </div>
 </section>
 
+<!-- Meal types -->
+<section class="container py-4">
+  <h2 class="text-center mb-4">Browse by meal type</h2>
+
+  <div class="row g-3">
+    <div class="col-md-4">
+      <a class="meal-card" href="{% url 'recipes:recipes' %}?meal_type=breakfast" aria-label="Browse breakfast recipes">
+        <div class="meal-card-inner">
+          <h3 class="meal-title">Breakfast</h3>
+          <p class="meal-text mb-0">Start your day right.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a class="meal-card" href="{% url 'recipes:recipes' %}?meal_type=lunch" aria-label="Browse lunch recipes">
+        <div class="meal-card-inner">
+          <h3 class="meal-title">Lunch</h3>
+          <p class="meal-text mb-0">Quick and tasty ideas.</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a class="meal-card" href="{% url 'recipes:recipes' %}?meal_type=dinner" aria-label="Browse dinner recipes">
+        <div class="meal-card-inner">
+          <h3 class="meal-title">Dinner</h3>
+          <p class="meal-text mb-0">Something special tonight.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
