@@ -276,3 +276,115 @@ The site’s structure is content-first and modular (hero → category tiles →
 
 ## Wireframes
 Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. This ensured the UI remained consistent, user-focused, and responsive across device sizes.
+
+# Security features considered
+
+## Secret management and environment-based configuration
+
+### Secret key from environment
+- `SECRET_KEY` is loaded from an environment variable instead of being hardcoded in the repo:
+  ```python
+  SECRET_KEY = os.environ.get("SECRET_KEY")
+Why it matters: Prevents accidental exposure of a critical secret in GitHub and supports different keys per environment (local vs production).
+
+### Debug controlled by environment
+DEBUG is controlled by an environment variable:
+
+python code
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+Why it matters: Helps ensure production can run with DEBUG=False thi is important because debug pages can leak settings, stack traces, and sensitive info.
+
+## Host header protection
+Restricted allowed hosts
+ALLOWED_HOSTS is restricted to Heroku domain and local development hosts:
+
+python
+ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1", "our-recipe-app-...herokuapp.com"]
+Why it matters: Protects against Host header attacks by preventing Django from serving requests for unexpected domains.
+
+## CSRF protection for forms and admin actions
+CSRF middleware enabled
+Django’s CSRF middleware is enabled:
+
+python
+"django.middleware.csrf.CsrfViewMiddleware"
+Why it matters: Blocks cross-site request forgery attempts on POST requests including recipe creation/editing/deleting and Django admin actions.
+
+Trusted origins configured for Heroku
+Trusted origins are configured for Heroku:
+
+python
+CSRF_TRUSTED_ORIGINS = [
+    "https://our-recipe-app-...herokuapp.com",
+    "https://*.herokuapp.com",
+]
+Why it matters: Essential behind a reverse proxy like Heroku so CSRF validation works correctly and requests only from trusted HTTPS origins are accepted.
+
+## Secure deployment behind Heroku’s HTTPS proxy
+Proxy SSL header set
+
+python
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+Why it matters: Tells Django to treat requests as HTTPS when Heroku terminates SSL upstream. Helps CSRF and session/cookie behavior stay correct in production.
+
+## Authentication and password security
+Using Django auth + allauth
+Django’s auth system + allauth used (django.contrib.auth, allauth, allauth.account, etc.).
+
+Why it matters: Provides robust-tested login/session management rather than custom auth.
+
+### Default password validators enabled
+Keeps Django’s default password validators:
+
+### similarity check
+
+minimum length
+
+common password check
+
+numeric password check
+
+Why it matters: Reduces weak-password risk significantly.
+
+### Account configuration
+Account setup:
+
+python
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "none"
+Why it matters: Provides structured signup fields and uses Django’s password confirmation flow.
+
+## Access control and authorization
+View-level protections
+App patterns (Create/Update/Delete views + mixins):
+
+- LoginRequiredMixin protects pages like adding/editing/deleting recipes so anonymous users can’t modify data.
+
+- UserPassesTestMixin ensures only the owner of a recipe can edit/delete it (prevents users changing or removing other users’ content).
+
+- handle unauthorized access with a clear 403-style page message.
+
+## Database and data security separation
+Production DB via environment variable
+Production uses PostgreSQL via DATABASE_URL and dj_database_url.parse(...):
+
+python
+if "DATABASE_URL" in os.environ:
+    DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
+Why it matters: Credentials are not stored in code, only in environment variables.
+
+## Static/media storage and file-handling considerations
+S3 storage via django-storages
+Static and media are stored on S3 via django-storages, with AWS credentials pulled from environment variables.
+
+Why it matters: Keeps files off the ephemeral Heroku filesystem and controls access policies at the bucket level.
+
+## Logging (operational security)
+Console logging to Heroku logs
+Logging config routes errors to console (Heroku logs).
+
+Why it matters: Helps detect issues quickly without exposing stack traces to users (as long as DEBUG=False in production).
+
+
+
