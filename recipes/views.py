@@ -6,7 +6,7 @@ from .forms import RecipeForm
 
 
 class Recipes(ListView):
-    """View all recipes"""
+    """View all recipes."""
 
     template_name = "recipes/recipes.html"
     model = Recipe
