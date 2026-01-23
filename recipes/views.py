@@ -25,6 +25,7 @@ class AddRecipe(LoginRequiredMixin, CreateView):
     """Add recipe view"""
 
     template_name = "recipes/add_recipe.html"
+    form_class = RecipeForm
     model = Recipe
     success_url = "/recipes/"
 
