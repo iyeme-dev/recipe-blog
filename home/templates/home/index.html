@@ -10,13 +10,14 @@
       <img
         src="{% static 'images/recipe_banner_image.jpg' %}"
         alt="Fresh recipes banner"
-        class="banner-img"
-      />
+        class="banner-img"/>
+        
       <div class="banner-overlay">
-        <h1 class="banner-title">Find your next favourite recipe</h1>
-        <p class="banner-subtitle">Search breakfast, lunch, and dinner ideas made easy.</p>
-        <a href="{% url 'recipes:recipes' %}" class="btn btn-primary">Browse recipes</a>
+        <a href="{% url 'recipes:recipes' %}" class="btn btn-primary banner-btn">
+            Browse Recipes
+        </a>
       </div>
+
     </div>
   </div>
 </section>
