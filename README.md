@@ -288,7 +288,9 @@ The site’s structure is content-first and modular (hero → category tiles →
 
 
 ## Wireframes
-Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. This ensured the UI remained consistent, user-focused, and responsive across device sizes.
+Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. 
+This ensured the UI remained consistent, user-focused, and responsive across device sizes.
+
 ![Wireframe](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/wireframe_recipe_app.png)
 
 
@@ -898,6 +900,7 @@ Documentation used during development:
 
 # Author
 Iyeme Salubi
+
 
 
 
