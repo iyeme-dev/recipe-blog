@@ -13,8 +13,16 @@ class Recipes(ListView):
     context_object_name = "recipes"
 
     def get_queryset(self):
-        qs = super().get_queryset()  # respects model + ordering + pagination
+        qs = super().get_queryset()  
         query = self.request.GET.get("q", "").strip()
+        meal_type = self.request.GET.get("meal_type", "").strip()
+        cuisine = self.request.GET.get("cuisine_types", "").strip()
+
+        if meal_type:
+            qs = qs.filter(meal_type=meal_type)
+
+        if cuisine:
+            qs = qs.filter(cuisine_types=cuisine)
         
         if query:
             qs = qs.filter(
