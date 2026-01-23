@@ -74,17 +74,19 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 DJRICHTEXTFIELD_CONFIG = {
-    'js': ['//cdn.ckeditor.com/4.25.1/standard/ckeditor.js'],
-    'init_template': 'djrichtextfield/init/ckeditor.js',
-    'settings': {
-        'toolbar': [
-            ['Format', 'Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList'], ['Undo', 'Redo'],
-            ['Maximize']
+    "js": ["//cdn.ckeditor.com/4.25.1/standard/ckeditor.js"],
+    "init_template": "djrichtextfield/init/ckeditor.js",
+    "settings": {
+        "toolbar": [
+            {"name": "basicstyles", "items": ["Format", "-", "Bold", "Italic", "Underline"]},
+            {"name": "paragraph", "items": ["NumberedList", "BulletedList"]},
+            {"name": "editing", "items": ["Undo", "Redo"]},
+            {"name": "tools", "items": ["Maximize"]},
         ],
-        'format_tags': 'p;h1;h2;h3'
-    }
+        "format_tags": "p;h1;h2;h3",
+    },
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
