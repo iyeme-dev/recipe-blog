@@ -1,9 +1,6 @@
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
-
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-
 from django.db.models import Q
-
 from .models import Recipe
 from .forms import RecipeForm
 
@@ -35,6 +32,15 @@ class RecipeDetail(DetailView):
     template_name = "recipes/recipe_detail.html"
     model = Recipe
     context_object_name = "recipe"
+
+class MyRecipes(LoginRequiredMixin, ListView):
+    """View recipes created by the logged-in user"""
+    model = Recipe
+    template_name = "recipes/my_recipes.html"
+    context_object_name = "recipes"
+
+    def get_queryset(self):
+        return Recipe.objects.filter(user=self.request.user).order_by("-posted_date")
 
 
 class AddRecipe(LoginRequiredMixin, CreateView):

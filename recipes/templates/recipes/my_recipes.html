@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Recipes{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <h1 class="mb-0">My Recipes</h1>
+    <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add new</a>
+  </div>
+
+  <p class="text-muted mt-2">Recipes you’ve created.</p>
+
+  {% if recipes %}
+    <div class="d-flex flex-row flex-wrap justify-content-center">
+      {% for recipe in recipes %}
+        <div class="card m-3" style="width: 18rem;">
+          {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" class="card-img-top" alt="{{ recipe.image_alt }}">
+          {% endif %}
+          <div class="card-body">
+            <h2 class="card-title">{{ recipe.title|truncatechars:50 }}</h2>
+            <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+
+            <div class="d-flex gap-2">
+              <a href="{% url 'recipes:recipe_detail' recipe.pk %}" class="btn btn-outline-primary btn-sm w-100">View</a>
+              <a href="{% url 'recipes:edit_recipe' recipe.pk %}" class="btn btn-primary btn-sm w-100">Edit</a>
+            </div>
+
+            <a href="{% url 'recipes:delete_recipe' recipe.pk %}" class="btn btn-outline-danger btn-sm w-100 mt-2">
+              Delete
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center py-5">
+      <h2 class="mb-2">No recipes yet</h2>
+      <p class="text-muted mb-4">When you add recipes, they’ll show up here.</p>
+      <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Create your first recipe</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -3,13 +3,14 @@ from .views import (
     AddRecipe,
     Recipes,
     RecipeDetail, DeleteRecipe,
-    EditRecipe
+    EditRecipe, MyRecipes
 )
 
 app_name = "recipes"
 
 urlpatterns = [
     path("add/", AddRecipe.as_view(), name="add_recipe"),
+    path("mine/", MyRecipes.as_view(), name="my_recipes"),
     path("", Recipes.as_view(), name="recipes"),
     path("<int:pk>/", RecipeDetail.as_view(), name="recipe_detail"),
     path("delete/<int:pk>/", DeleteRecipe.as_view(), name="delete_recipe"),
