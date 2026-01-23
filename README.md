@@ -35,13 +35,12 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
 10. [Testing](#testing)
    - [Browser Testing](#browser-testing)  
    - [Code Validation](#code-validation)  
-   - [Lighthouse Test](#lighthouse-test)
 11. [Testing Errors and Improvements](#testing-errors-and-improvements)
 12. [Technologies Used](#technologies-used)
 13. [Credit and Reference](#credit-and-reference)
 14. [Author](#author)
 
-
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 # Project Overview
 This project is based on developing a community-driven web app for discovering and sharing recipes: visitors can browse the latest recipe feed, search for dishes, and explore recipes by meal type (breakfast, lunch, dinner), then open a detailed recipe page to view information like description, calories, cuisine, ingredients, and step-by-step instructions. Users can also create an account and log in to contribute their own recipes through an authenticated “New recipe” flow, helping build a shared collection of everyday cooking ideas.
 
@@ -228,6 +227,7 @@ The app uses a clean, food-friendly colour palette that keeps the interface simp
 The layout is designed for quick discovery and easy reading. Recipes are presented in a clear feed/card format for browsing, with dedicated pages for full recipe details. Navigation supports common user journeys (latest recipes, meal categories, search, authentication), and the structure prioritises scannability—especially for ingredients and step-by-step instructions.
 
 ### Overall Information Architecture
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 The site is organised around a small set of top-level pages that support the main user journeys. A persistent header navigation provides direct access to **Home**, **Recipes**, **New**, **Register**, and **Login**, with a **Search** control available across pages to encourage quick discovery. 
 
 In terms of hierarchy, the experience flows from **discovery** (Home/Recipes) → **selection** (Recipe list) → **execution** (Recipe detail) → **contribution** (Register/Login → New recipe).
@@ -235,17 +235,23 @@ In terms of hierarchy, the experience flows from **discovery** (Home/Recipes) �
 ---
 
 ### Key Pages and Their Structure
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 
 #### Home (Discovery + Direction)
 The Home page acts as a “starting hub” with a clear headline and a primary call-to-action (“Browse recipes”), immediately steering users into discovery. It also includes a **Browse By Meal Type** section with three prominent options (Breakfast, Lunch, Dinner) to help users jump straight to context-based browsing without extra clicks.
 
 #### Recipes (Latest Feed)
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
 The Recipes page is structured as a **latest-recipes feed**, presenting multiple recipe entries together so visitors can scan quickly and choose what interests them. Beneath the feed, there’s a clear prompt encouraging visitors to register (“Register to Share Yours”), which supports the transition from browsing to contributing.
 
 #### Meal Type Views (Breakfast/Lunch/Dinner)
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+
 Meal-type navigation routes users to filtered recipe views using a query parameter (e.g., `?meal_type=breakfast`). This keeps the browsing model consistent—users still view recipes in the same list structure—but with the intent narrowed to the meal category they selected. 
 
 ##### Recipe Detail (Cooking Mode)
+<img width="1917" height="813" alt="image" src="https://github.com/user-attachments/assets/005b1a08-27cc-4afd-80e2-c7283226a1f0" />
+
 Each recipe has a dedicated detail page that prioritises cooking clarity. The content is presented with a clear hierarchy:
 - Title + author/date metadata
 - Short description
@@ -255,6 +261,7 @@ Each recipe has a dedicated detail page that prioritises cooking clarity. The co
 This structure reduces cognitive load while cooking by separating “what you need” (ingredients) from “what you do” (instructions).
 
 ##### Authentication + Protected Actions
+<img width="1917" height="813" alt="image" src="https://github.com/user-attachments/assets/14f00178-7005-4b33-bb2c-9112dbe5e893" />
 Account creation and sign-in live on dedicated pages (Register/Login). Importantly, the **New** navigation item is protected: if a user attempts to access recipe creation without being authenticated, they are redirected to the sign-in page with a “next” destination so they can return to the creation flow after logging in. 
 
 ---
@@ -282,6 +289,8 @@ The site’s structure is content-first and modular (hero → category tiles →
 
 ## Wireframes
 Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. This ensured the UI remained consistent, user-focused, and responsive across device sizes.
+![Uploading image.png…]()
+
 
 # Security Features
 
@@ -713,4 +722,49 @@ Django auth/permissions (built-in)
 - django_content_type (1) → django_admin_log (many)
 - admin logs are tied to model types
 
+## ER Diagram
+![Uploading image.png…]()
+
+### Code Validation
+
+#### HTML Validation
+![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+
+No errors on the HTML validation tool
+
+#### CSS Validation
+![CSS Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/css%20validation.png)
+
+No errors on the CSS validation tool
+
+### Lighthouse Test
+![Lighthouse Testing](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/desktop-validation.png)
+
+# Testing Errors and Improvements
+Some improvements were suggested during the lighthouse test, which were implemented to increase the overall performance score:
+
+- Slow loading times due to large image sizes - Image files were resized to improve page load times. 
+- Poor colour contrasts in the footer - The primary color was darkened to improve the contrast between the background and the text.
+
+# Technologies Used
+### HTML5
+Used for structuring the content of the web pages.
+
+### CSS3
+Used for styling the website
+
+### Bootstrap 5
+Used to create a responsive and mobile-friendly design. 
+
+### Git & GitHub
+GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io/home-staging/
+
+# Credits and Reference
+- Images sourced from [FreePik](https://freepik.com/)
+- Brand logo generated with [favicon](https://favicon.io/) 
+- Fonts from [Google Fonts](https://fonts.google.com/)
+- Icons from [Font Awesome](https://fontawesome.com/)
+
+# Author
+Iyeme Salubi
 
