@@ -27,14 +27,19 @@ This Community Sharing Recipe App is a simple, community-driven web app for disc
    - [Wireframes](#wireframes)  
 6. [Deployment](#deployment)
 7. [Security Features](#security-features)
-8. [Testing](#testing)
+8. [Database](#database)
+   - [Database Schema](#database schema)
+   - [CRUD Operations](#crud operations)
+   - [Relationships](#relationships)
+   - [ER Diagram](#er diagram)
+10. [Testing](#testing)
    - [Browser Testing](#browser-testing)  
    - [Code Validation](#code-validation)  
    - [Lighthouse Test](#lighthouse-test)
-9. [Testing Errors and Improvements](#testing-errors-and-improvements)
-10. [Technologies Used](#technologies-used)
-11. [Credit and Reference](#credit-and-reference)
-12. [Author](#author)
+11. [Testing Errors and Improvements](#testing-errors-and-improvements)
+12. [Technologies Used](#technologies-used)
+13. [Credit and Reference](#credit-and-reference)
+14. [Author](#author)
 
 
 # Project Overview
@@ -532,6 +537,177 @@ heroku run -a recipe-blog -- python manage.py collectstatic --noinput
 Open:
 heroku open -recipe-blog
 
+# Database
 
+## Database technology
+The deployed application uses PostgreSQL as its production database. Django connects through the DATABASE_URL environment variable (parsed by dj-database-url). The schema is created and maintained using Django migrations, which makes the database structure reproducible and version-controlled.
 
+The database stores structured data (users, recipes, etc.). Uploaded images are stored externally (S3); PostgreSQL stores the file path/reference to each image.
 
+⸻
+
+## Database schema
+
+### Entity 1: User (auth_user)
+
+Django’s authentication system provides the User model and creates the auth_user table (plus additional tables for groups/permissions/sessions). Users are the owners of recipes.
+
+#### Key fields:
+	•	id (Primary Key)
+	•	username
+	•	email
+	•	password 
+	•	account flags 
+
+⸻
+
+### Entity 2: Recipe (recipes_recipe)
+#### Relationship
+Custom Recipe model creates the recipes_recipe table. Each recipe belongs to one user and contains recipe content and metadata.
+
+#### Recipe model fields
+	•	id — Primary Key 
+	•	user — ForeignKey(User, on_delete=models.CASCADE, related_name="recipe_owner")
+	•	title — CharField(max_length=300, null=False, blank=False)
+	•	description — CharField(max_length=500, null=False, blank=False)
+	•	instructions — RichTextField(max_length=10000, null=False, blank=False)
+	•	ingredients — RichTextField(max_length=10000, null=False, blank=False)
+	•	image — ResizedImageField(size=[400, None], quality=75, upload_to="recipes/", force_format="WEBP")
+	•	image_alt — CharField(max_length=100, null=False, blank=False)
+	•	meal_type — CharField(max_length=50, choices=MEAL_TYPES, default="breakfast")
+	•	cuisine_types — CharField(max_length=50, choices=CUISINE_TYPES, default="african")
+	•	calories — IntegerField()
+	•	posted_date — DateTimeField(auto_now=True)
+
+#### Choice fields
+	•	Meal types: breakfast / lunch / dinner
+	•	Cuisine types: african, american, caribbean, asian, middle_eastern, chinese, indian, pakistani, indonesian, european, oceanic
+
+These are stored in the database as strings, while Django can display the visible label (e.g., “Breakfast”).
+
+#### Constraints and behaviour
+	•	Ownership is mandatory: a recipe cannot exist without a valid user (ForeignKey).
+	•	Cascade delete: deleting a user automatically deletes their recipes (on_delete=models.CASCADE).
+	•	Ordering: newest recipes first:
+
+## CRUD functionality
+
+### Routes (from recipes/urls.py)
+	•	Create: /recipes/add/
+	•	Read (list): /recipes/
+	•	Read (detail): /recipes/<int:pk>/
+	•	Read (user-owned list): /recipes/mine/
+	•	Update: /recipes/edit/<int:pk>/
+	•	Delete: /recipes/delete/<int:pk>/
+
+⸻
+
+### Create: Add a recipe
+
+View: AddRecipe(LoginRequiredMixin, CreateView)
+Route: /recipes/add/
+	•	Users must be logged in.
+	•	Ownership is set automatically
+
+ Database operations:
+	•	INSERT into recipes_recipe
+	•	user_id set to logged-in user
+	•	stores recipe fields (title, description, ingredients/instructions HTML, etc.)
+	•	stores image path pointing to the upload location
+
+⸻
+
+### Read: View all recipes (+ search)
+
+View: Recipes(ListView)
+Route: /recipes/
+	•	Returns recipes ordered by posted_date (newest first due to Meta.ordering).
+	•	Supports search using query string
+
+Database effect:
+	•	SELECT from recipes_recipe
+	•	When searching, Postgres performs case-insensitive pattern matching (translated by Django ORM)
+
+⸻
+
+Read (RecipeDetail)
+
+View: RecipeDetail(DetailView)
+Route: /recipes/<int:pk>/
+	•	Fetches a single recipe by its primary key.
+
+Database effect:
+	•	SELECT ... WHERE id = <pk>
+
+⸻
+
+Read (MyRecipes)
+
+View: MyRecipes(LoginRequiredMixin, ListView)
+Route: /recipes/mine/
+	•	Shows only recipes owned by the logged-in user:
+
+ Database effect:
+	•	SELECT ... WHERE user_id = <current_user_id> ORDER BY posted_date DESC
+
+⸻
+
+### Update (EditRecipe)
+
+View: EditRecipe(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
+Route: /recipes/edit/<int:pk>/
+	•	Requires login
+	•	Restricts editing to the recipe owner:
+
+ Database effect:
+	•	UPDATE recipes_recipe SET ... WHERE id = <pk>
+
+⸻
+
+### Delete (DeleteRecipe)
+
+View: DeleteRecipe(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
+Route: /recipes/delete/<int:pk>/
+	•	Requires login
+	•	Restricts deletion to the recipe owner using the same ownership test.
+
+Database effect:
+	•	DELETE FROM recipes_recipe WHERE id = <pk>
+
+## Relationships
+
+Core app relationship
+	•	auth_user (1) → recipes_recipe (many)
+	•	recipes_recipe.user_id → auth_user.id (FK)
+	•	Meaning: one user can create many recipes; each recipe belongs to one user.
+	•	Delete rule: on_delete=CASCADE (deleting a user deletes their recipes)
+
+Sites + allauth relationships
+	•	django_site (1) → socialaccount_socialapp_sites (many)
+	•	join table links social apps to allowed sites
+	•	socialaccount_socialapp (1) → socialaccount_socialapp_sites (many)
+	•	a social app can be enabled on multiple sites
+	•	auth_user (1) → socialaccount_socialaccount (many)
+	•	a user can have multiple social identities
+	•	socialaccount_socialaccount (1) → socialaccount_socialtoken (many/0..many)
+	•	tokens are linked to a specific social account
+	•	socialaccount_socialapp (1) → socialaccount_socialtoken (many/0..many)
+	•	tokens are also linked to the social app used
+	•	auth_user (1) → account_emailaddress (many)
+	•	a user can store multiple email addresses
+	•	account_emailaddress (1) → account_emailconfirmation (many/0..many)
+	•	confirmation records link to an email address
+
+Django auth/permissions (built-in)
+	•	auth_user (many) ↔ auth_group (many)
+	•	via join table auth_user_groups
+	•	auth_group (many) ↔ auth_permission (many)
+	•	via join table auth_group_permissions
+	•	auth_user (many) ↔ auth_permission (many)
+	•	via join table auth_user_user_permissions
+	•	django_content_type (1) → auth_permission (many)
+	•	permissions are tied to a model type
+	•	auth_user (1) → django_admin_log (many)
+	•	admin actions performed by a user
+	•	django_content_type (1) → django_admin_log (many)
+	•	admin logs are tied to model types
