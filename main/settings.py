@@ -37,6 +37,13 @@ ALLOWED_HOSTS = [
     'our-recipe-app-368893a37080.herokuapp.com'
 ]
 
+# Heroku / HTTPS proxy + CSRF
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://our-recipe-app-368893a37080.herokuapp.com",
+    "https://*.herokuapp.com",
+]
 
 # Application definition
 
