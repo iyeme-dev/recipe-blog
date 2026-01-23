@@ -2,6 +2,8 @@ from django.views.generic import CreateView, ListView, DetailView, DeleteView, U
 
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
+from django.db.models import Q
+
 from .models import Recipe
 from .forms import RecipeForm
 
@@ -12,6 +14,20 @@ class Recipes(ListView):
     template_name = "recipes/recipes.html"
     model = Recipe
     context_object_name = "recipes"
+
+    def get_queryset(self):
+        qs = super().get_queryset()  # respects model + ordering + pagination
+        query = self.request.GET.get("q", "").strip()
+        
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(instructions__icontains=query) |
+                Q(cuisine_types__icontains=query)
+            )
+
+        return qs
 
 class RecipeDetail(DetailView):
     """View a single recipe"""
