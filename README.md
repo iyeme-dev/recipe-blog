@@ -278,7 +278,7 @@ The site’s structure is content-first and modular (hero → category tiles →
 ## Wireframes
 Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. This ensured the UI remained consistent, user-focused, and responsive across device sizes.
 
-# Security features considered
+# Security Features
 
 ## Secret management and environment-based configuration
 
@@ -531,6 +531,7 @@ heroku run -a recipe-blog -- python manage.py collectstatic --noinput
 ## Open the app + monitor logs
 Open:
 heroku open -recipe-blog
+
 
 
 
