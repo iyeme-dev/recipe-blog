@@ -262,6 +262,7 @@ This structure reduces cognitive load while cooking by separating “what you ne
 ##### Authentication + Protected Actions
 ![Create account](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/create-account.jpg)
 Account creation and sign-in live on dedicated pages (Register/Login). Importantly, the **New** navigation item is protected: if a user attempts to access recipe creation without being authenticated, they are redirected to the sign-in page with a “next” destination so they can return to the creation flow after logging in. 
+![Login Page](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/sign-in.jpg)
 
 ---
 
@@ -400,7 +401,8 @@ Logging config routes errors to console (Heroku logs).
 
 Why it matters: Helps detect issues quickly without exposing stack traces to users (as long as DEBUG=False in production).
 
-# Deployment to Heroku (Django + Postgres + S3)
+# Deployment to Heroku 
+![Deployment](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/deployment_heroku.jpg)
 
 ## Pre-deployment checks (local)
 
@@ -726,7 +728,7 @@ Django auth/permissions (built-in)
 
 # Testing
 
-Testing was carried out to ensure the site works correctly across key pages and user journeys (navigation, browsing recipes, viewing a recipe, and authentication flows). Where device/browser testing is listed, it is provided as a recommended BrowserStack matrix you can run to confirm cross-device consistency.
+Testing was carried out to ensure the site works correctly across key pages and user journeys (navigation, browsing recipes, viewing a recipe, and authentication flows).
 
 ## Manual Functional Testing
 
@@ -896,6 +898,7 @@ Documentation used during development:
 
 # Author
 Iyeme Salubi
+
 
 
 
