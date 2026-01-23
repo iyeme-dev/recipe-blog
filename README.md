@@ -844,13 +844,59 @@ No errors on the CSS validation tool
   Handles integration between Django and Amazon S3, allowing Django to use S3 as the backend for `staticfiles` and uploaded media.
 
 # Credits and Reference
-- Images sourced from [FreePik](https://freepik.com/)
-- Brand logo generated with [favicon](https://favicon.io/) 
-- Fonts from [Google Fonts](https://fonts.google.com/)
-- Icons from [Font Awesome](https://fontawesome.com/)
+## Frameworks & Core Tooling
+
+- **Django (Python web framework)** – Project foundation (views, templates, ORM, admin).
+- **PostgreSQL (production database)** – Hosted via Heroku Postgres add-on (connection managed via `DATABASE_URL`).
+- **Gunicorn (WSGI server)** – Production web server on Heroku.
+
+## Authentication
+
+- **django-allauth** – Registration/login/logout flows (also uses `django.contrib.sites`).
+
+## Static & Media Storage
+
+- **Amazon S3** – Hosts static assets and uploaded media files in production.
+- **django-storages** – Django storage backend integration for S3 (`S3Boto3Storage`).
+- **boto3** – AWS SDK used by `django-storages`.
+
+## UI / Styling
+
+- **Bootstrap 5** – Responsive layout and components.
+- **django-crispy-forms + crispy-bootstrap5** – Form rendering with the Bootstrap 5 template pack.
+- **Google Fonts** – Typography (EB Garamond + Roboto).
+
+## Rich Text & Images
+
+- **django-richtextfield / djrichtextfield** – Rich text editor integration used for Ingredients/Instructions.
+- **django-resized** – Image resizing for recipe uploads (`ResizedImageField`).
+
+## Hosting / Platform
+
+- **Heroku** – Application hosting and Django static build behaviour (`collectstatic`).
+
+---
+
+## References
+
+Documentation used during development:
+
+- **Django documentation** (settings, middleware, security, etc.).
+- **Heroku: “Django and Static Assets”** (how `collectstatic` runs during builds).
+- **django-storages documentation** (S3 backends and custom storage classes).
+- **AWS documentation** (S3 concepts, buckets, objects).
+- **Gunicorn documentation**.
+- **Psycopg documentation** (PostgreSQL adapter).
+- **Bootstrap documentation**.
+- **django-crispy-forms / crispy-bootstrap5 documentation**.
+- **Google Fonts specimen pages** (used in CSS imports).
+
+---
+
 
 # Author
 Iyeme Salubi
+
 
 
 
