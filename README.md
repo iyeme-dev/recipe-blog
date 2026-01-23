@@ -249,7 +249,7 @@ The Recipes page is structured as a **latest-recipes feed**, presenting multiple
 Meal-type navigation routes users to filtered recipe views using a query parameter (e.g., `?meal_type=breakfast`). This keeps the browsing model consistent—users still view recipes in the same list structure—but with the intent narrowed to the meal category they selected. 
 
 ##### Recipe Detail (Cooking Mode)
-![Meal type](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/meal_type.jpg)
+![Recipe detail](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/detail-page.jpg)
 
 Each recipe has a dedicated detail page that prioritises cooking clarity. The content is presented with a clear hierarchy:
 - Title + author/date metadata
@@ -260,7 +260,7 @@ Each recipe has a dedicated detail page that prioritises cooking clarity. The co
 This structure reduces cognitive load while cooking by separating “what you need” (ingredients) from “what you do” (instructions).
 
 ##### Authentication + Protected Actions
-<img width="1917" height="813" alt="image" src="https://github.com/user-attachments/assets/14f00178-7005-4b33-bb2c-9112dbe5e893" />
+![Create account](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/create-account.jpg)
 Account creation and sign-in live on dedicated pages (Register/Login). Importantly, the **New** navigation item is protected: if a user attempts to access recipe creation without being authenticated, they are redirected to the sign-in page with a “next” destination so they can return to the creation flow after logging in. 
 
 ---
@@ -288,7 +288,7 @@ The site’s structure is content-first and modular (hero → category tiles →
 
 ## Wireframes
 Wireframes were used to plan the core screens and user flow before implementation, focusing on essential interactions. This ensured the UI remained consistent, user-focused, and responsive across device sizes.
-![Uploading image.png…]()
+![Wireframe](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/wireframe_recipe_app.png)
 
 
 # Security Features
@@ -722,7 +722,7 @@ Django auth/permissions (built-in)
 - admin logs are tied to model types
 
 ## ER Diagram
-![Uploading image.png…]()
+![ERD](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/erd-rb.png)
 
 # Testing
 
@@ -790,27 +790,58 @@ Fix: added app_name = "recipes" and updated {% url %} calls to use namespaced ro
 ### Code Validation
 
 #### HTML Validation
-![HTML Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/html-validation.png)
+![HTML Validation](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/javascript-validator.jpg)
 
 No errors on the HTML validation tool
 
 #### CSS Validation
-![CSS Validation](https://github.com/iyeme-dev/home-staging/blob/cf02cfb9bab1818fe00f6e97b6475daa6616f654/screenshots/css%20validation.png)
+![CSS Validation](https://github.com/iyeme-dev/recipe-blog/blob/main/static/images/css_validator.rb.jpg)
 
 No errors on the CSS validation tool
 
-# Technologies Used
-### HTML5
-Used for structuring the content of the web pages.
+## Technologies Used
 
-### CSS3
-Used for styling the website
+### Backend
+- **Python 3.x**  
+  The main programming language used to build the application logic.
+- **Django 6.0.1**  
+  The web framework used to create the project structure, URL routing, views, templates, models, forms, and admin interface.
+- **PostgreSQL**  
+  The production database used to store application data (users, recipes, authentication-related tables, etc.). The app connects using `DATABASE_URL` on Heroku.
+- **Gunicorn**  
+  A production WSGI server used to run the Django application on Heroku (via the `Procfile`).
 
-### Bootstrap 5
-Used to create a responsive and mobile-friendly design. 
+### Authentication & User Management
+- **Django Allauth**  
+  Provides user registration, login/logout, and account management features. It also introduces additional database tables such as `account_emailaddress`, `socialaccount_*`, and requires the `django.contrib.sites` framework.
+- **Django Sites Framework (`django.contrib.sites`)**  
+  Supports multi-site configurations and is used by Allauth to associate authentication flows with the correct domain.
 
-### Git & GitHub
-GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io/home-staging/
+### Frontend
+- **HTML (Django Templates)**  
+  Pages are rendered using Django’s templating system with reusable components (e.g., `base.html`, includes, and app templates).
+- **CSS (Custom styling)**  
+  Custom styling is applied through static CSS (e.g., `static/css/base.css`) for layout, branding, and responsiveness.
+- **Bootstrap 5**  
+  Used for responsive grid layout, navigation, cards, buttons, spacing utilities, and form styling.
+
+### Forms & UI Enhancements
+- **django-crispy-forms**  
+  Improves form rendering in templates, making forms easier to style consistently.
+- **crispy-bootstrap5**  
+  Provides Bootstrap 5-compatible crispy form templates.
+
+### Content & Media Handling
+- **djrichtextfield (CKEditor)**  
+  Provides rich text editor support for recipe fields such as ingredients and instructions.
+- **django-resized**  
+  Used for uploaded images to automatically resize and optimise them (including converting images to WEBP).
+
+### Static Files & Media Storage
+- **Amazon S3**  
+  Used to store static assets (CSS, icons, images) and uploaded media files in production.
+- **django-storages + boto3**  
+  Handles integration between Django and Amazon S3, allowing Django to use S3 as the backend for `staticfiles` and uploaded media.
 
 # Credits and Reference
 - Images sourced from [FreePik](https://freepik.com/)
@@ -820,6 +851,7 @@ GitHub Pages was used to deploy the website live at: https://iyeme-dev.github.io
 
 # Author
 Iyeme Salubi
+
 
 
 
